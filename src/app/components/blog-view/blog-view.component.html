@@ -1,0 +1,191 @@
+<div *ngIf="blogDetails">
+  <div class="d-flex justify-content-center">
+    <div class="d-flex flex-column">
+      <h2>{{ blogDetails.title }}</h2>
+      <div class="d-flex flex-row gap-2">
+        <img
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+          class="rounded-circle"
+          style="width: 2rem; height: 2rem"
+        />
+        <p>{{ blogDetails.auther }}</p>
+        <p class="fw-light">{{ blogDetails.date }}</p>
+        <i (click)="openModal()" class="bi bi-chat pointer">{{
+          blogDetails.comments?.length
+        }}</i>
+        <div class="overlay" *ngIf="isModalOpen" (click)="closeModal()"></div>
+        <div class="modal-container" [ngClass]="{ 'modal-open': isModalOpen }">
+          <div class="modal-content">
+            <button
+              class="close-btn btn btn-outline-dark"
+              (click)="closeModal()"
+            >
+              close
+            </button>
+            <h5>comments({{ blogDetails.comments?.length }})</h5>
+            <!-- Add New Comment -->
+            <form class="form-group" (ngSubmit)="addComment()">
+              <div class="d-flex flex-row gap-1 my-5">
+                <input
+                  type="text"
+                  [(ngModel)]="commentText"
+                  placeholder="Write a comment..."
+                  name="commentText"
+                  class="form-control"
+                />
+                <button
+                  style="
+                    background-color: gray;
+                    border: 0;
+                    border-radius: 5px;
+                    color: aliceblue;
+                  "
+                  type="submit"
+                >
+                  Post
+                </button>
+              </div>
+            </form>
+            <select id="filter" (change)="sortComments($event)">
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="mostLiked">Most Liked</option>
+            </select>
+
+            <div
+              *ngFor="let comment of blogDetails.comments"
+              class="comment mt-5 mx-3"
+            >
+              <div class="d-flex flex-row gap-1 align-item-center">
+                <img
+                  class="rounded-circle"
+                  style="width: 2rem; height: 2rem"
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                />
+                <p style="font-size: 15px">
+                  {{ comment.user }} - {{ comment.date }}
+                </p>
+              </div>
+              <p class="ms-5">{{ comment.text }}</p>
+
+              <button class="btn" (click)="likeComment(comment)">
+                <i
+                  class="bi"
+                  [ngClass]="{
+                    'bi-hand-thumbs-up-fill': comment.likedBy?.includes(name),
+                    'bi-hand-thumbs-up': !comment.likedBy?.includes(name)
+                  }"
+                ></i>
+                {{ comment.likes || 0 }}
+              </button>
+
+              <button
+                (click)="comment.showReplyInput = !comment.showReplyInput"
+                style="
+                  background-color: gray;
+                  border: 0;
+                  border-radius: 5px;
+                  color: aliceblue;
+                "
+              >
+                {{ comment.showReplyInput ? "Cancel" : "Reply" }}
+              </button>
+
+              <div *ngIf="comment.showReplyInput">
+                <form class="form-group" (ngSubmit)="addReply(comment)">
+                  <div class="d-flex flex-row gap-1">
+                    <input
+                      type="text"
+                      [(ngModel)]="replyText"
+                      placeholder="Write a reply..."
+                      name="replyText"
+                      class="form-control"
+                    />
+                    <button
+                      style="
+                        background-color: gray;
+                        border: 0;
+                        border-radius: 5px;
+                        color: aliceblue;
+                      "
+                      type="submit"
+                    >
+                      Reply
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Replies Section -->
+              <div *ngFor="let reply of comment.replies" class="my-2 ms-4">
+                <div class="d-flex flex-row gap-1 align-item-center">
+                  <p style="font-size: 10px">
+                    <img
+                      class="rounded-circle"
+                      style="width: 2rem; height: 2rem"
+                      src="https://cdn-icons-png.flaticon.com/512/3314/3314267.png"
+                    />
+                    <img
+                      class="rounded-circle"
+                      style="width: 2rem; height: 2rem"
+                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    />
+                    {{ reply.user }} -
+                    {{ reply.date }}
+                  </p>
+                </div>
+                <p class="ms-5">{{ reply.text }}</p>
+                <button class="btn" (click)="likeReply(reply)">
+                  <i
+                    class="bi"
+                    [ngClass]="{
+                      'bi-hand-thumbs-up-fill': reply.likedBy?.includes(name),
+                      'bi-hand-thumbs-up': !reply.likedBy?.includes(name)
+                    }"
+                  ></i>
+                  {{ reply.likes || 0 }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img
+        [src]="blogDetails.image"
+        alt="blog thumbnail"
+        style="width: 100%; height: 25rem"
+        class="rounded"
+      />
+    </div>
+  </div>
+  <div style="margin-left: 12rem; margin-right: 12rem">
+    <div class="mb-5">
+      <p [innerHTML]="blogDetails.discription"></p>
+    </div>
+  </div>
+  <div>
+    <h5 class="ms-5">Realted blogs</h5>
+    <div
+      class="container d-flex flex-row align-items-center justify-content-center gap-3"
+    >
+      <div *ngFor="let blog of blogsList" class="card" style="width: 15rem">
+        <img
+          class="card-img-top"
+          [src]="blog.image"
+          style="width: 100%; height: 10rem; object-fit: cover"
+          alt="Card image cap"
+        />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ blog.title }}</h5>
+
+          <p class="fs-6 fw-light">{{ blog.date }}</p>
+          <div class="mt-auto">
+            <a (click)="getDetails(blog.id)" class="btn btn-primary"
+              >Read more</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

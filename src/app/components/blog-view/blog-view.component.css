@@ -1,0 +1,66 @@
+.btn i {
+    font-size: 1rem;
+    color: gray;
+    transition: color 0.3s ease;
+  }
+  
+  .btn i.bi-hand-thumbs-up-fill {
+    color: blue;
+  }
+  
+  .btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  /* Modal Container */
+.modal-container {
+  position: fixed;
+  top: 0;
+  right: -500px; /* Initially hidden off-screen */
+  width: 400px; /* Width of your modal */
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transition: right 0.3s ease; /* Smooth slide-in */
+  z-index: 1050; /* Ensure it's above other content */
+  overflow-y: scroll;
+}
+
+/* Modal Open: slide-in effect */
+.modal-open {
+  right: 0; /* Move to visible position */
+}
+
+/* Modal Content */
+.modal-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Optional: Add background overlay for the rest of the page */
+body.modal-open {
+  overflow:scroll; /* Prevent scrolling when modal is open */
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1049; /* Behind the modal */
+}

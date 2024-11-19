@@ -1,0 +1,93 @@
+<div>
+  <div class="m-3">
+    <h2>New Post</h2>
+  </div>
+  <div class="m-3 border border-primary rounded p-3">
+    <form (ngSubmit)="submitBlog()">
+      <div class="form-group d-flex felx-direction-row gap-3">
+        <div class="col-6">
+          <label for="title">Title:</label>
+          <input
+            id="title"
+            [(ngModel)]="blog.title"
+            class="form-control"
+            name="title"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="date">Date:</label>
+          <input
+            id="date"
+            [(ngModel)]="blog.date"
+            class="form-control"
+            name="date"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="author">Author:</label>
+          <input
+            id="author"
+            [(ngModel)]="blog.auther"
+            class="form-control"
+            name="author"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="image">Image URL:</label>
+        <input
+          id="image"
+          [(ngModel)]="blog.image"
+          class="form-control"
+          name="image"
+          required
+        />
+      </div>
+      <label for="content">Content:</label>
+      <editor
+        apiKey="5wsgo5rc61n0vil8aydz88mifuxf8s0bz40fqiwbfq4jt67w"
+        [init]="{
+          plugins: 'link image media table lists',
+          toolbar:
+            'undo redo | bold italic underline | link image media | numlist bullist',
+          media_live_embeds: true,
+          automatic_uploads: true,
+          images_reuse_filename: true
+        }"
+        [(ngModel)]="blog.discription"
+        (ngModelChange)="handleEditorChange($event)"
+        name="content"
+      ></editor>
+
+      <button class="btn btn-primary mt-3 mb-4" type="submit">
+        Submit Blog
+      </button>
+
+      <!-- schedule and darf code -->
+      <div class="col-6 mt-3">
+        <label for="scheduledDate">Schedule Date:</label>
+        <input
+          id="scheduledDate"
+          [(ngModel)]="blog.scheduledDate"
+          type="date"
+          class="form-control"
+          name="scheduledDate"
+        />
+      </div>
+
+      <!-- Buttons -->
+      <button
+        class="btn btn-secondary mt-3 me-3"
+        type="button"
+        (click)="saveAsDraft()"
+      >
+        Save as Draft
+      </button>
+    </form>
+  </div>
+</div>

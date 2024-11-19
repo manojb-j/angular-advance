@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="blogsList"
+      ><div class="d-flex felx-direction-row">
+        <h1 class="font-weight-bold">Microverse</h1>
+        <p class="fst-italic fw-light fs-6">blogs</p>
+      </div></a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarText"
+      aria-controls="navbarText"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="discover">discover</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="blogsList">feeds</a>
+        </li>
+      </ul>
+      <span class="navbar-text d-flex felx-row gap-3">
+        <p (click)="signOut()">logout</p>
+        <img
+          class="rounded-circle"
+          style="width: 1.5rem; height: 1.5rem"
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+        />
+      </span>
+    </div>
+  </div>
+</nav>
+<router-outlet />
+<p-toast />

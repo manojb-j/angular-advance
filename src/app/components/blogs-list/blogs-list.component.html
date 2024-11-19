@@ -1,0 +1,139 @@
+<div>
+  <section class="dark">
+    <div class="container py-4">
+      <!-- <h1 class="h1 text-center" id="pageHeaderTitle">My Cards Dark</h1> -->
+      <div
+        class="d-flex justify-content-center align-items-center gap-3 mb-4 search-bar"
+      >
+        <input
+          type="text"
+          class="form-control w-50 transparent-input"
+          placeholder="Search properties..."
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+        />
+        <button
+          style="width: 100px"
+          (click)="addPost()"
+          class="btn btn-primary"
+        >
+          Post
+        </button>
+      </div>
+
+      <article class="postcard dark blue">
+        <a class="postcard__img_link">
+          <img
+            class="postcard__img"
+            src="https://images.newscientist.com/wp-content/uploads/2024/10/11120356/SEI_225147570.jpg"
+            alt="Image Title"
+          />
+        </a>
+        <div class="postcard__text">
+          <h1 class="postcard__title blue">
+            <a href="#">SpaceX : Starship</a>
+          </h1>
+          <div class="postcard__subtitle small">
+            <time datetime="2020-05-25 12:00:00">
+              <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+            </time>
+          </div>
+          <div class="postcard__bar"></div>
+          <div class="postcard__preview-txt">
+            SpaceX’s Starship spacecraft and Super Heavy rocket – collectively
+            referred to as Starship – represent a fully reusable transportation
+            system designed to carry both crew and cargo to Earth orbit, the
+            Moon, Mars and beyond. Starship is the world’s most powerful launch
+            vehicle ever developed, capable of carrying up to 150 metric tonnes
+            fully reusable and 250 metric tonnes expendable.
+          </div>
+          <!-- <ul class="postcard__tagbox">
+            <li class="tag__item"><i class="fas fa-tag mr-2"></i>Podcast</li>
+            <li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
+            <li class="tag__item play blue">
+              <a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+            </li>
+          </ul> -->
+        </div>
+      </article>
+    </div>
+
+    <!-- sortbuttons here  -->
+
+    <div class="sort-buttons">
+      <button
+        (click)="sortBlogs('mostCmt')"
+        [class.active]="activeSort === 'mostCmt'"
+      >
+        popular
+      </button>
+      <button
+        (click)="sortBlogs('newest')"
+        [class.active]="activeSort === 'newest'"
+      >
+        Newest
+      </button>
+      <button
+        (click)="sortBlogs('oldest')"
+        [class.active]="activeSort === 'oldest'"
+      >
+        Oldest
+      </button>
+    </div>
+
+    <div
+      class="container d-flex flex-row align-items-center justify-content-center gap-3"
+    >
+      <div
+        *ngFor="let blog of paginatedBlogsList"
+        class="card text-bg-dark mb-3"
+        style="width: 15rem"
+      >
+        <img
+          class="card-img-top"
+          [src]="blog.image"
+          style="width: 100%; height: 200px; object-fit: cover"
+          alt="Card image cap"
+        />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ blog.title }}</h5>
+          <div class="card-text d-flex flex-row gap-2 mt-2">
+            <img
+              [src]="blog.image"
+              class="rounded-circle"
+              alt="auther image"
+              style="width: 1rem; height: 20px; object-fit: cover"
+            />
+            <p>{{ blog.auther }}</p>
+            <p class="fw-light fs-6">{{ blog.date }}</p>
+          </div>
+          <div class="mt-auto m-1 d-flex justify-content-end">
+            <a (click)="getDetails(blog.id)" class="btn btn-primary"
+              >Read more</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="changePage(currentPage - 1)"
+            >Previous</a
+          >
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          [class.active]="currentPage === i + 1"
+        >
+          <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+        </li>
+
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </section>
+</div>
